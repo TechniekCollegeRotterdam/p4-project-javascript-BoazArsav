@@ -8,7 +8,7 @@ canvas.height = innerHeight
 class Player {
     constructor() {
 
-        
+
         this.velocity = {
             x: 0,
             y: 0
@@ -35,13 +35,21 @@ class Player {
     draw() {
         // c.fillStyle = 'red'
         // c.fillRect(this.position.x, this.position.y, this.width, this.height)
-        if (this.image)
+        if (this.image) 
         c.drawImage(
             this.image,
             this.position.x,
             this.position.y,
             this.width,
-            this.heigth)
+            this.heigth
+            )
+    }
+
+    update() {
+ 
+        this.draw()
+        this.position.x += this.velocity.x
+        
     }
 }
 
@@ -52,6 +60,23 @@ function animate() {
     requestAnimationFrame(animate)
     c.fillStyle = 'black'
     c.fillRect(0, 0, canvas.width, canvas.height)
-    player.draw()
+    player.update()
 }
 animate()
+
+addEventListener('keydown', ({ key }) => {
+
+    switch (key) {
+    //besturring links
+    case 'a':
+        console.log('left')
+        break
+    //besturing rechts
+    case 'd':
+        console.log('right')
+        break
+    case ' ':
+        console.log('shoot')
+        break
+    }
+})
