@@ -4,79 +4,42 @@ const c = canvas.getContext('2d')
 canvas.width = innerWidth
 canvas.height = innerHeight
 
-//alles voor de speler
+//Hoofd instellingen voor de speler
 class Player {
-    constructor() {
-
-
+    constructor(){
+        this.position = {
+            x: 200,
+            y: 200
+        }
         this.velocity = {
             x: 0,
             y: 0
         }
 
-        //spelermodel inladen en instellingen van spelermodel
         const image = new Image()
         image.src = './img/spaceship.png'
-        image.onload = () => {
-            const scale = 0.15
-            this.image = image
-            this.width = image.width * scale
-            this.heigth = image.height * scale
-            //hiermee bepaal je de positie van de speler op spawnpoint
-            this.position = {
-                x: canvas.width / 2 - this.width / 2,
-                y: canvas.height - this.heigth - 20
-            }
-        }
 
-
+        this.image = image
+        this.width = 100
+        this.height = 100
     }
 
     draw() {
-        // c.fillStyle = 'red'
-        // c.fillRect(this.position.x, this.position.y, this.width, this.height)
-        if (this.image) 
-        c.drawImage(
-            this.image,
-            this.position.x,
-            this.position.y,
-            this.width,
-            this.heigth
-            )
-    }
-
-    update() {
- 
-        this.draw()
-        this.position.x += this.velocity.x
-        
+// c.fillStyle = 'red'
+// c.fillRect(this.position.x, this.position.y, this.width, this.height)
+c.drawImage (this.image, this.position.x, this.position.y)
     }
 }
+
+
 
 const player = new Player()
 player.draw()
 
-function animate() {
+function animate(){
     requestAnimationFrame(animate)
-    c.fillStyle = 'black'
     c.fillRect(0, 0, canvas.width, canvas.height)
-    player.update()
+    player.draw()
 }
+
 animate()
-
-addEventListener('keydown', ({ key }) => {
-
-    switch (key) {
-    //besturring links
-    case 'a':
-        console.log('left')
-        break
-    //besturing rechts
-    case 'd':
-        console.log('right')
-        break
-    case ' ':
-        console.log('shoot')
-        break
-    }
-})
