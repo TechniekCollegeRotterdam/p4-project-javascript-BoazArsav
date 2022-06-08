@@ -60,6 +60,18 @@ function animate(){
 
 animate()
 
-addEventListener('keydown', (event) => {
-    console.log(event)
+addEventListener('keydown', ({key}) => {
+    switch(key){
+        case 'a':
+        console.log('left')
+        break
+
+        case 'd':
+        console.log('right')
+        break
+
+        case ' ':
+        console.log('shoot')
+        break
+    }
 })
