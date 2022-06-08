@@ -44,6 +44,13 @@ class Player {
     this.height
     )
     }
+
+
+
+    update(){
+        this.draw()
+        this.position.x += this.velocity.x
+    }
 }
 
 
