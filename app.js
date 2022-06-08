@@ -1,3 +1,4 @@
+//kijk video vanaf 22:42
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
@@ -58,3 +59,7 @@ function animate(){
 }
 
 animate()
+
+addEventListener('keydown', (event) => {
+    console.log(event)
+})
