@@ -7,12 +7,10 @@ canvas.height = innerHeight;
 
 class Player {
   constructor() {
-
     this.velocity = {
       x: 0,
       y: 0,
     };
-    //laad de image van de speler in
     const image = new Image();
     image.src = "./img/spaceship.png";
     image.onload = () => {
@@ -63,9 +61,12 @@ function animate() {
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
   player.update();
-
+  // als je op A druk dan ga je naar links
   if (keys.a.pressed) {
     player.velocity.x = -5;
+    // als je op D druk dan ga je naar rechts
+  } else if (keys.d.pressed) {
+    player.velocity.x = 5
   } else {
     player.velocity.x = 0;
   }
