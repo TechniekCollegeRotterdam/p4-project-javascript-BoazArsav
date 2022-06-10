@@ -2,6 +2,13 @@
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
+//alles in de main doen
+//commet mogen wat duidelijker
+//funtion moet op de nieuwe manier
+
+//code ziet er goed uit
+
+
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
