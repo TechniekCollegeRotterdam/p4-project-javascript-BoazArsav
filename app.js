@@ -58,7 +58,7 @@ const keys = {
     pressed: false,
   },
 };
-
+//funtie op de nieuwe manier schrijven omdat het op de oude manier gedaan is 
 function animate() {
   requestAnimationFrame(animate);
   c.fillStyle = "black";
