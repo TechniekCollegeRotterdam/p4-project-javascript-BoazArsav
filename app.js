@@ -62,11 +62,13 @@ function animate() {
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
   player.update();
-  // als je op A druk dan ga je naar links
-  if (keys.a.pressed) {
+  //besturing van speler
+  // als je op A druk dan ga je naar links met border limit
+  if (keys.a.pressed && player.position.x >= 0)  {
     player.velocity.x = -5;
-    // als je op D druk dan ga je naar rechts
-  } else if (keys.d.pressed) {
+    // als je op D druk dan ga je naar rechts met border limit
+    // player velocity is snelheid speler
+  } else if (keys.d.pressed && player.position.x +player.width <= canvas.width) {
     player.velocity.x = 5
   } else {
     player.velocity.x = 0;
