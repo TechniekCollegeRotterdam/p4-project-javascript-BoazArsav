@@ -11,6 +11,7 @@ class Player {
       x: 0,
       y: 0,
     };
+    //laad de image van de speler in en de instellingen van image
     const image = new Image();
     image.src = "./img/spaceship.png";
     image.onload = () => {
