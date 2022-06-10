@@ -1,4 +1,5 @@
-//kijk video vanaf 30:00
+//kijk video vanaf 30:00  
+// :ik weet niet wat er meet deze comment hierboven bedoeld wordt en er mogen meer comments geplaats worden
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
@@ -11,7 +12,8 @@ class Player {
       x: 0,
       y: 0,
     };
-    //laad de image van de speler in en de instellingen van image
+    //laad de image van de speler in en de instellingen van image  
+    // :deze comment hierboven mag wat uigebreider en geef wat meer details in welke code wat van de instellingen doet
     const image = new Image();
     image.src = "./img/spaceship.png";
     image.onload = () => {
