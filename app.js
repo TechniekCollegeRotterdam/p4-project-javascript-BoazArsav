@@ -29,7 +29,7 @@ class Player {
   }
 
   draw() {
-
+    // dit slaat deze instellingen van de speler op als het iets moet doen
     c.save()
     c.translate(
       player.position.x + player.width / 2,
@@ -61,7 +61,31 @@ class Player {
   }
 }
 
+class Projectile{
+  constructor({position, velocity}){
+    this.position = position
+    this.velocity = velocity
+
+    this.radius = 3
+  }
+    draw() {
+      c.beginPath()
+      c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
+      c.fillStyle = 'red'
+      c.fill()
+      c.closePath()
+  }
+
+  update() {
+    this.draw()
+    this.position.x += this.velocity.x
+    this.position.y += this.velocity.y
+  }
+}
+
 const player = new Player();
+const projectiles = [
+]
 const keys = {
   a: {
     pressed: false,
@@ -79,8 +103,12 @@ function animate() {
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
   player.update();
+  projectiles.forEach(projectile => {
+    projectile.update()
+  })
   //besturing van speler
   // als je op A druk dan ga je naar links met border limit
+  // player.rotation is de rotatie van de speler als je een richting in ga
   if (keys.a.pressed && player.position.x >= 0)  {
     player.velocity.x = -7;
     player.rotation = -0.15
@@ -90,8 +118,9 @@ function animate() {
     player.velocity.x = 7
     player.rotation = 0.15
   } else {
+    // dit gebeurt er met de speler als je niks indrukt
     player.velocity.x = 0
-    player.rotation = -0.15
+    player.rotation = -0
   }
 }
 animate();
@@ -105,6 +134,16 @@ addEventListener("keydown", ({ key }) => {
       keys.d.pressed = true;
       break;
     case " ":
+      projectiles.push(new Projectile({
+        position: {
+          x: player.position.x + player.width / 2,
+          y: player.position.y
+        },
+        velocity: {
+          x: 0,
+          y: -20
+        }
+      }))
       break;
   }
 });
