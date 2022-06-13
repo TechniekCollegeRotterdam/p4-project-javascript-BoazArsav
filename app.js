@@ -143,7 +143,8 @@ addEventListener("keydown", ({ key }) => {
           x: 0,
           y: -20
         }
-      }))
+      })
+      )
       break;
   }
 });
