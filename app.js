@@ -1,4 +1,4 @@
-//kijk video vanaf 44:09
+//kijk video vanaf 52:29
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
@@ -83,15 +83,16 @@ class Projectile{
   }
 }
 
+// Instellingen van de Invader class
 class Invader {
-    constructor() {
+    constructor({position}) {
       this.velocity = {
         x: 0,
         y: 0,
       };
   
       
-      //laad de image van de speler in en de instellingen van image
+      //laad de image van de Invader in en de instellingen van image
       const image = new Image();
       image.src = "./img/invader.png";
       image.onload = () => {
@@ -100,14 +101,14 @@ class Invader {
         this.width = image.width * scale;
         this.height = image.height * scale;
         this.position = {
-          x: canvas.width / 2 - this.width / 2,
-          y: canvas.height / 2
+          x: position.x,
+          y: position.y
         };
       };
     }
   
     draw() {
-      // dit slaat deze instellingen van de speler op als het iets moet doen
+      // dit slaat deze instellingen van de Invader op als het iets moet doen
       c.drawImage(
         this.image,
         this.position.x,
@@ -126,9 +127,42 @@ class Invader {
     }
   }
 
+class Grid {
+    constructor(){
+        this.position = {
+            x: 0,
+            y: 0
+        }
+        this.velocity = {
+            x: 0,
+            y: 0
+        }
+        //spawnen van invaders
+        this.invaders = []
+
+        const rows = Math.floor(Math.random() * 5)
+        for (let x = 0; x < 10; x++){
+            for (let y = 0; y < rows; y++){
+            this.invaders.push(new Invader({
+                position:{
+                x: x * 30,
+                y: y * 30
+            }
+        })
+        )
+        }
+    }
+        console.log(this.invaders)
+    }
+
+    update(){
+
+    }
+}
+
 const player = new Player();
 const projectiles = []
-const invader = new Invader();
+const grids = [new Grid()]
 const keys = {
   a: {
     pressed: false,
@@ -145,7 +179,6 @@ function animate() {
   requestAnimationFrame(animate);
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
-  invader.update()
   player.update();
   projectiles.forEach (projectile => {
 
@@ -158,6 +191,13 @@ function animate() {
       projectile.update();
     }
     
+  })
+
+  grids.forEach(grid => {
+    grid.update()
+    grid.invaders.forEach(invader => {
+        invader.update()
+    })
   })
   //besturing van speler
   // als je op A druk dan ga je naar links met border limit
