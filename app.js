@@ -103,8 +103,14 @@ function animate() {
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
   player.update();
-  projectiles.forEach(projectile => {
-    projectile.update()
+  projectiles.forEach (projectile => {
+
+    if (projectile.position.y + projectile.radius <= 0) {
+      projectiles.splice (projectile, 1)
+    } else {
+      projectile.update();
+    }
+    
   })
   //besturing van speler
   // als je op A druk dan ga je naar links met border limit
@@ -145,6 +151,7 @@ addEventListener("keydown", ({ key }) => {
         }
       })
       )
+      console.log(projectiles)
       break;
   }
 });
