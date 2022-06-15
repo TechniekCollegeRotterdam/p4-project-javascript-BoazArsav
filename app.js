@@ -1,4 +1,4 @@
-//kijk video vanaf 1:00:39
+//kijk video vanaf 1:13:39
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
@@ -118,11 +118,11 @@ class Invader {
       );
     }
   
-    update() {
+    update({velocity}) {
       if (this.image) {
         this.draw();
-        this.position.x += this.velocity.x
-        this.position.y += this.velocity.y;
+        this.position.x += velocity.x
+        this.position.y += velocity.y;
       }
     }
   }
@@ -134,14 +134,18 @@ class Grid {
             y: 0
         }
         this.velocity = {
-            x: 0,
+            x: 3,
             y: 0
         }
         //spawnen van invaders
         this.invaders = []
 
-        const rows = Math.floor(Math.random() * 5)
-        for (let x = 0; x < 10; x++){
+        const columns = Math.floor(Math.random() * 10 + 5)
+        const rows = Math.floor(Math.random() * 5 + 3)
+
+        this.width = columns * 30
+
+        for (let x = 0; x < columns; x++){
             for (let y = 0; y < rows; y++){
             this.invaders.push(new Invader({
                 position:{
@@ -156,13 +160,21 @@ class Grid {
     }
 
     update(){
+      this.position.x += this.velocity.x
+      this.position.y += this.velocity.y
 
+      this.velocity.y = 0
+
+      if (this.position.x + this.width >= canvas.width || this.position.x <= 0) {
+        this.velocity.x = -this.velocity.x
+        this.velocity.y = 30
+      }
     }
 }
 
 const player = new Player();
 const projectiles = []
-const grids = [new Grid()]
+const grids = []
 const keys = {
   a: {
     pressed: false,
@@ -174,6 +186,12 @@ const keys = {
     pressed: false,
   },
 };
+
+
+let frames = 0
+let randomInterval = Math.floor(Math.random() * 500 + 500)
+
+
 
 function animate() {
   requestAnimationFrame(animate);
@@ -196,7 +214,7 @@ function animate() {
   grids.forEach(grid => {
     grid.update()
     grid.invaders.forEach(invader => {
-        invader.update()
+        invader.update({velocity: grid.velocity})
     })
   })
   //besturing van speler
@@ -215,7 +233,20 @@ function animate() {
     player.velocity.x = 0
     player.rotation = -0
   }
+
+  // console.log(frames)
+  //spawned een nieuwe grid op een minimale fps van 500 en meer
+  if(frames % randomInterval  === 0){
+    grids.push(new Grid())
+    randomInterval = Math.floor(Math.random() * 500 + 500)
+    frames = 0
+    console.log(randomInterval)
+  }
+  
+  frames++
 }
+
+
 animate();
 
 addEventListener("keydown", ({ key }) => {
