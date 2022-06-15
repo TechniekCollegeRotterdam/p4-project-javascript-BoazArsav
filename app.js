@@ -1,4 +1,4 @@
-//kijk video vanaf 1:13:39
+//kijk video vanaf 1:19:24
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
@@ -213,8 +213,27 @@ function animate() {
 
   grids.forEach(grid => {
     grid.update()
-    grid.invaders.forEach(invader => {
+    grid.invaders.forEach((invader, i) => {
         invader.update({velocity: grid.velocity})
+
+        projectiles.forEach((projectile, j) => {
+          if (projectile.position.y - projectile.radius <= invader.position.y + invader.height 
+              && projectile.position.x + projectile.radius >= invader.position.x 
+              && projectile.position.x - projectile.radius <= invader.position.x
+              && projectile.position.y + projectile.radius >= invader.position.y){
+
+            setTimeout(() =>{
+              const invaderFound = grid.invaders.find(invader2 => {
+                return invader2 ===
+              })
+              grid.invaders.splice(i, 1)
+              projectiles.splice(j, 1)
+
+            }, 0)
+
+          }
+
+        })
     })
   })
   //besturing van speler
