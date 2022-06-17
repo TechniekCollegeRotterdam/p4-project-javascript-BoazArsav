@@ -5,6 +5,9 @@ const c = canvas.getContext("2d");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
+
+
+
 class Player {
   constructor() {
     this.velocity = {
@@ -61,6 +64,10 @@ class Player {
   }
 }
 
+
+
+
+
 class Projectile{
   constructor({position, velocity}){
     this.position = position
@@ -82,6 +89,29 @@ class Projectile{
     this.position.y += this.velocity.y
   }
 }
+
+//schieten van invaders
+class InvaderProjectile{
+  constructor({position, velocity}){
+    this.position = position
+    this.velocity = velocity
+
+    this.width = 3
+    this.height = 10
+  }
+    draw() {
+      c.fillStyle = 'white'
+      c.fillRect(this.position.x, this.position.y, this.width, this.height)
+  }
+
+  update() {
+    this.draw()
+    this.position.x += this.velocity.x
+    this.position.y += this.velocity.y
+  }
+}
+
+
 
 // Instellingen van de Invader class
 class Invader {
@@ -125,7 +155,24 @@ class Invader {
         this.position.y += velocity.y;
       }
     }
+
+    shoot(InvaderProjectiles){
+      InvaderProjectiles.push(new InvaderProjectile({
+        position: {
+          x: this.position.x + this.width / 2,
+          y: this.position.y + this.height
+        },
+        velocity: {
+          x: 0,
+          y: 5
+        }
+      }))
+
+    }
   }
+
+
+
 
 class Grid {
     constructor(){
@@ -134,14 +181,15 @@ class Grid {
             y: 0
         }
         this.velocity = {
-            x: 2,
+            x: 3.2,
             y: 0
         }
         //spawnen van invaders
         this.invaders = []
 
-        const columns = Math.floor(Math.random() * 10 + 5)
-        const rows = Math.floor(Math.random() * 5 + 3)
+        //spawn hoeveelheid enemies lengte en breedte
+        const columns = Math.floor(Math.random() * 12 + 8)
+        const rows = Math.floor(Math.random() * 1 + 3)
 
         this.width = columns * 30
 
@@ -175,6 +223,8 @@ class Grid {
 const player = new Player();
 const projectiles = []
 const grids = []
+const InvaderProjectiles = []
+
 const keys = {
   a: {
     pressed: false,
@@ -187,9 +237,11 @@ const keys = {
   },
 };
 
-
+// orginele variable waardes
 let frames = 0
 let randomInterval = Math.floor(Math.random() * 500 + 500)
+
+
 
 
 
@@ -198,6 +250,10 @@ function animate() {
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
   player.update();
+  InvaderProjectiles.forEach(InvaderProjectile => {
+    InvaderProjectile.update()
+  })
+
   projectiles.forEach (projectile => {
 
     if (projectile.position.y + projectile.radius <= 0) {
@@ -213,6 +269,12 @@ function animate() {
 
   grids.forEach(grid => {
     grid.update()
+
+    //projectile spawn
+    if (frames % 100 === 0 && grid.invaders.lenght > 0){
+      grid.invaders[Math.floor(Math.random() * grid.invaders.lenght)].shoot(InvaderProjectiles)
+    }
+
     grid.invaders.forEach((invader, i) => {
         invader.update({velocity: grid.velocity})
 
@@ -230,9 +292,19 @@ function animate() {
 
               const projectileFound = projectiles.find(projectile2 => projectile2 === projectile)
 
+
+              //remove invader / projectile
               if(invaderFound && projectileFound){
               grid.invaders.splice(i, 1)
               projectiles.splice(j, 1)
+
+              if (grid.invaders.lenght > 0) {
+                const firstInvader = grid.invaders[0]
+                const lastInvader = grid.invaders[grid.invaders.lenght - 1]
+
+                grid.width = lastInvader.position.x - firstInvader.position.x + lastInvader.width
+                grid.position.x = firstInvader.position.x
+              }
             }
             }, 0)
 
@@ -259,14 +331,17 @@ function animate() {
   }
 
   // console.log(frames)
-  //spawned een nieuwe grid op een minimale fps van 500 en meer
+  //spawned een nieuwe grid van enemies op een minimale fps van 2300 tot en met 3000 fps
   if(frames % randomInterval  === 0){
     grids.push(new Grid())
-    randomInterval = Math.floor(Math.random() * 500 + 500)
+    randomInterval = Math.floor(Math.random() * 700 + 2300)
     frames = 0
-    console.log(randomInterval)
+    // console.log(randomInterval)
   }
   
+  
+
+
   frames++
 }
 
