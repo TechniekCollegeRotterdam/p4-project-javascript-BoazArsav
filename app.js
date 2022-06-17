@@ -1,4 +1,4 @@
-//kijk video vanaf 1:19:24
+//kijk video vanaf 1:22:20
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
