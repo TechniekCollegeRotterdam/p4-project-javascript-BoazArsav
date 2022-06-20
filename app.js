@@ -18,7 +18,7 @@ class Player {
     this.rotation = 0
     //laad de image van de speler in en de instellingen van image
     const image = new Image();
-    image.src = "./img/spaceship.png";
+    image.src = "./img/plane.png";
     image.onload = () => {
       const scale = 0.15;
       this.image = image;
@@ -181,7 +181,7 @@ class Grid {
             y: 0
         }
         this.velocity = {
-            x: 3.2,
+            x: 10,
             y: 0
         }
         //spawnen van invaders
@@ -334,7 +334,7 @@ function animate() {
   //spawned een nieuwe grid van enemies op een minimale fps van 2300 tot en met 3000 fps
   if(frames % randomInterval  === 0){
     grids.push(new Grid())
-    randomInterval = Math.floor(Math.random() * 700 + 2300)
+    randomInterval = Math.floor(Math.random() * 700 + 1000)
     frames = 0
     // console.log(randomInterval)
   }
