@@ -8,5 +8,9 @@ bewegen links: A<br>
 bewegen rechts: D<br>
 Schieten: Spacebar<br>
 
+<h2>Gameplay Componenten</h2>
+De game is gemaakt in Canvas<br>
+De game houdt de punten bij<br>
+
 <h2>Hoe kan je het spel downloaden</h2>
 Je kan dit spel zelf downloaden door op de Fork knop te drukken in de github branch
