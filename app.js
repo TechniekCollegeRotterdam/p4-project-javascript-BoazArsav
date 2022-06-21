@@ -7,7 +7,7 @@ canvas.height = innerHeight;
 
 
 
-
+// instellingen van de speler
 class Player {
   constructor() {
     this.velocity = {
@@ -67,7 +67,7 @@ class Player {
 
 
 
-
+//instellingen van de projectielen speler
 class Projectile{
   constructor({position, velocity}){
     this.position = position
@@ -78,7 +78,7 @@ class Projectile{
     draw() {
       c.beginPath()
       c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
-      c.fillStyle = 'red'
+      c.fillStyle = 'lightblue'
       c.fill()
       c.closePath()
   }
@@ -173,7 +173,7 @@ class Invader {
 
 
 
-
+// dit zijn de instellingen van de invaders als groep
 class Grid {
     constructor(){
         this.position = {
@@ -220,6 +220,7 @@ class Grid {
     }
 }
 
+// constante functie's
 const player = new Player();
 const projectiles = []
 const grids = []
@@ -244,7 +245,7 @@ let randomInterval = Math.floor(Math.random() * 500 + 500)
 
 
 
-
+// de functie om animatie's te laten zien
 function animate() {
   requestAnimationFrame(animate);
   c.fillStyle = "black";
@@ -313,6 +314,7 @@ function animate() {
         })
     })
   })
+  
   //besturing van speler
   // als je op A druk dan ga je naar links met border limit
   // player.rotation is de rotatie van de speler als je een richting in ga
