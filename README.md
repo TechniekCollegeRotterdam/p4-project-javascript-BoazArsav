@@ -4,6 +4,6 @@ Dit is het klassieke spel Space Invaders, in dit spel is het de bedoeling dat je
 
 <h2>Besturing</h2>
 
-bewegen links: A
-bewegen rechts: D
+bewegen links: A<br>
+bewegen rechts: D<br>
 Schieten: Spacebar
