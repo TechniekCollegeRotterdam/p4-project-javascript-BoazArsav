@@ -6,4 +6,7 @@ Dit is het klassieke spel Space Invaders, in dit spel is het de bedoeling dat je
 
 bewegen links: A<br>
 bewegen rechts: D<br>
-Schieten: Spacebar
+Schieten: Spacebar<br>
+
+<h2>Hoe kan je het spel downloaden</h2>
+Je kan dit spel zelf downloaden door op de Fork knop te drukken in de github branch
