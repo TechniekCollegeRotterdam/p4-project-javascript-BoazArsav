@@ -59,7 +59,7 @@ class Player {
     }
   }
 }
-//begin class Projectile
+//instellingen van de projectielen speler
 class Projectile {
   constructor({
     position,
@@ -73,9 +73,7 @@ class Projectile {
 
   draw() {
     c.beginPath()
-    c.arc(this.position.x, this.position.y, this.radius, 0,
-      Math.PI * 2)
-
+    c.arc(this.position.x, this.position.y, this.radius, 0,Math.PI * 2)
     c.fillStyle = 'lightblue'
     c.fill()
     c.closePath()
@@ -89,7 +87,7 @@ class Projectile {
   }
 }
 
-//begin InvaderProjectile
+//schieten van invaders
 class InvaderProjectile {
   constructor({
     position,
@@ -117,6 +115,7 @@ class InvaderProjectile {
   }
 }
 
+// Instellingen van de Invader class
 class Invader {
   constructor({
     position
@@ -142,9 +141,6 @@ class Invader {
   }
 
   draw() {
-
-
-
     c.drawImage(
       this.image,
       this.position.x,
@@ -152,7 +148,6 @@ class Invader {
       this.width,
       this.height
     );
-    c.restore()
   }
 
   update({
@@ -160,9 +155,8 @@ class Invader {
   }) {
     if (this.image) {
       this.draw();
-      this.position.x += velocity.x;
+      this.position.x += velocity.x
       this.position.y += velocity.y;
-
     }
   }
 
@@ -192,14 +186,15 @@ class Grid {
     }
 
     this.velocity = {
-      x: 3,
+      x: 6,
       y: 0
     }
     //spawnen van invaders
     this.invaders = []
    //spawn hoeveelheid enemies lengte en breedte
-    const columns = Math.floor(Math.random() * 10 + 5)
-    const rows = Math.floor(Math.random() * 5 + 2)
+   //spawn hoeveelheid enemies lengte en breedte
+   const columns = Math.floor(Math.random() * 8 + 8)
+   const rows = Math.floor(Math.random() * 1 + 3)
 
     this.width = columns * 30
 
@@ -251,7 +246,8 @@ const keys = {
 
 // orginele variable waardes
 let frames = 0
-let randomInterval = Math.floor(Math.random() * 500 + 500)
+ //spawned een nieuwe grid van enemies op een minimale fps van 700 tot en met 1300 fps
+let randomInterval = Math.floor(Math.random() * 500 + 700)
 
 
 // de functie om animatie's te laten zien
@@ -285,11 +281,9 @@ function animate() {
     if (Projectile.position.y + Projectile.radius <= 0) {
       setTimeout(() => {
         Projectiles.splice(index, 1)
-
       }, 0)
     } else {
       Projectile.update()
-
     }
 
   })
@@ -332,7 +326,7 @@ function animate() {
 
                 grid.width = lastInvader.position.x -
                   firstInvader.position.x + lastInvader.width
-                grid.position.x = firstInvader.position
+                grid.position.x = firstInvader.position.x
               } else {
                 grids.splice(gridIndex, 1)
               }
@@ -359,7 +353,8 @@ function animate() {
   //spwans de invaders in
   if (frames % randomInterval === 0) {
     grids.push(new Grid())
-    randomInterval = Math.floor(Math.random() * 500 + 500)
+    //spawned een nieuwe grid van enemies op een minimale fps van 1500 tot en met 2000 fps
+    randomInterval = Math.floor(Math.random() * 700 + 500)
     frames = 0
   }
 
