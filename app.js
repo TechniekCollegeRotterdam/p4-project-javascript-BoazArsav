@@ -4,7 +4,7 @@ const c = canvas.getContext("2d");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
-//begin class speler
+//Instellingen Speler Class
 class Player {
   constructor() {
     this.velocity = {
@@ -59,7 +59,7 @@ class Player {
     }
   }
 }
-//instellingen van de projectielen speler
+//instellingen speler Projectiles
 class Projectile {
   constructor({
     position,
@@ -87,7 +87,7 @@ class Projectile {
   }
 }
 
-//schieten van invaders
+//Instellingen Invader Projectiles
 class InvaderProjectile {
   constructor({
     position,
@@ -160,7 +160,7 @@ class Invader {
     }
   }
 
-  //invader laten schieten
+  //Schietfunctie Invaders
   shoot(invaderProjectiles) {
     invaderProjectiles.push(new InvaderProjectile({
       position: {
@@ -177,7 +177,7 @@ class Invader {
   }
 }
 
-// dit zijn de instellingen van de invaders als groep
+//GridInstellingen Invaders
 class Grid {
   constructor() {
     this.position = {
