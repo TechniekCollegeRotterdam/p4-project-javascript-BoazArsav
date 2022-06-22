@@ -1,13 +1,10 @@
-// herkijk video vanaf 1:22:34
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
-
-
-// instellingen van de speler
+//begin class speler
 class Player {
   constructor() {
     this.velocity = {
@@ -16,7 +13,6 @@ class Player {
     };
 
     this.rotation = 0
-    //laad de image van de speler in en de instellingen van image
     const image = new Image();
     image.src = "./img/plane.png";
     image.onload = () => {
@@ -32,19 +28,19 @@ class Player {
   }
 
   draw() {
-    // dit slaat deze instellingen van de speler op als het iets moet doen
+
     c.save()
     c.translate(
       player.position.x + player.width / 2,
       player.position.y + player.height / 2
-    )
+    );
 
     c.rotate(this.rotation)
 
     c.translate(
       -player.position.x - player.width / 2,
       -player.position.y - player.height / 2
-    )
+    );
 
     c.drawImage(
       this.image,
@@ -63,11 +59,7 @@ class Player {
     }
   }
 }
-
-
-
-
-//instellingen van de projectielen speler
+//begin class Projectile
 class Projectile {
   constructor({
     position,
@@ -78,9 +70,12 @@ class Projectile {
 
     this.radius = 4
   }
+
   draw() {
     c.beginPath()
-    c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
+    c.arc(this.position.x, this.position.y, this.radius, 0,
+      Math.PI * 2)
+
     c.fillStyle = 'lightblue'
     c.fill()
     c.closePath()
@@ -90,10 +85,11 @@ class Projectile {
     this.draw()
     this.position.x += this.velocity.x
     this.position.y += this.velocity.y
+
   }
 }
 
-//schieten van invaders
+//begin InvaderProjectile
 class InvaderProjectile {
   constructor({
     position,
@@ -102,24 +98,25 @@ class InvaderProjectile {
     this.position = position
     this.velocity = velocity
 
+
     this.width = 3
     this.height = 10
   }
+
   draw() {
-    c.fillStyle = 'white'
-    c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    c.fillStyle = 'red'
+    c.fillRect(this.position.x, this.position.y, this.width,
+      this.height)
   }
 
   update() {
     this.draw()
     this.position.x += this.velocity.x
     this.position.y += this.velocity.y
+
   }
 }
 
-
-
-// Instellingen van de Invader class
 class Invader {
   constructor({
     position
@@ -130,11 +127,10 @@ class Invader {
     };
 
 
-    //laad de image van de Invader in en de instellingen van image
     const image = new Image();
     image.src = "./img/invader.png";
     image.onload = () => {
-      const scale = 1
+      const scale = 1;
       this.image = image;
       this.width = image.width * scale;
       this.height = image.height * scale;
@@ -146,7 +142,9 @@ class Invader {
   }
 
   draw() {
-    // dit slaat deze instellingen van de Invader op als het iets moet doen
+
+
+
     c.drawImage(
       this.image,
       this.position.x,
@@ -154,6 +152,7 @@ class Invader {
       this.width,
       this.height
     );
+    c.restore()
   }
 
   update({
@@ -161,27 +160,28 @@ class Invader {
   }) {
     if (this.image) {
       this.draw();
-      this.position.x += velocity.x
+      this.position.x += velocity.x;
       this.position.y += velocity.y;
+
     }
   }
 
+  //invader laten schieten
   shoot(invaderProjectiles) {
     invaderProjectiles.push(new InvaderProjectile({
       position: {
         x: this.position.x + this.width / 2,
-        y: this.position.y + this.height
+        y: this.position.y + this.width
       },
+
       velocity: {
         x: 0,
         y: 5
       }
-    }))
 
+    }))
   }
 }
-
-
 
 // dit zijn de instellingen van de invaders als groep
 class Grid {
@@ -190,30 +190,33 @@ class Grid {
       x: 0,
       y: 0
     }
+
     this.velocity = {
-      x: 10,
+      x: 3,
       y: 0
     }
     //spawnen van invaders
     this.invaders = []
-
-    //spawn hoeveelheid enemies lengte en breedte
-    const columns = Math.floor(Math.random() * 12 + 8)
-    const rows = Math.floor(Math.random() * 1 + 3)
+   //spawn hoeveelheid enemies lengte en breedte
+    const columns = Math.floor(Math.random() * 10 + 5)
+    const rows = Math.floor(Math.random() * 5 + 2)
 
     this.width = columns * 30
 
     for (let x = 0; x < columns; x++) {
       for (let y = 0; y < rows; y++) {
+
         this.invaders.push(new Invader({
           position: {
             x: x * 30,
             y: y * 30
+
           }
         }))
       }
+
+
     }
-    console.log(this.invaders)
   }
 
   update() {
@@ -228,10 +231,9 @@ class Grid {
     }
   }
 }
-
 // constante functie's
 const player = new Player();
-const projectiles = []
+const Projectiles = []
 const grids = []
 const invaderProjectiles = []
 
@@ -252,38 +254,52 @@ let frames = 0
 let randomInterval = Math.floor(Math.random() * 500 + 500)
 
 
-
-
 // de functie om animatie's te laten zien
 function animate() {
   requestAnimationFrame(animate);
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
   player.update();
-  invaderProjectiles.forEach(invaderProjectile => {
-    invaderProjectile.update()
+  invaderProjectiles.forEach((invaderProjectile, index) => {
+    if (invaderProjectile.position.y + invaderProjectile.height >= canvas.height) {
+      setTimeout(() => {
+        invaderProjectiles.splice(index, 1)
+
+      }, 0)
+    } else invaderProjectile.update()
+// als een projectile de speler raakt dan stop  het spel
+    if (invaderProjectile.position.y + invaderProjectile.
+      height >=
+       player.position.y && invaderProjectile.position.x +
+       invaderProjectile.width >= player.position.x && 
+       invaderProjectile.position.x <= player.position.x +
+       player.width) {
+
+        console.log('you lose')
+      }
   })
 
-  projectiles.forEach(projectile => {
 
-    if (projectile.position.y + projectile.radius <= 0) {
+  Projectiles.forEach((Projectile, index) => {
+
+    if (Projectile.position.y + Projectile.radius <= 0) {
       setTimeout(() => {
-        projectiles.splice(projectile, 1)
-      }, 0)
+        Projectiles.splice(index, 1)
 
+      }, 0)
     } else {
-      projectile.update();
+      Projectile.update()
+
     }
 
   })
 
-
   grids.forEach((grid, gridIndex) => {
     grid.update()
 
-    //projectile spawn
-    if (frames % 100 === 0 && grid.invaders.lenght > 0) {
-      grid.invaders[Math.floor(Math.random() * grid.invaders.lenght)].shoot(invaderProjectiles)
+    //spawn projectiles invaders
+    if (frames % 100 === 0 && grid.invaders.length > 0) {
+      grid.invaders[Math.floor(Math.random() * grid.invaders.length)].shoot(invaderProjectiles)
     }
 
     grid.invaders.forEach((invader, i) => {
@@ -291,76 +307,67 @@ function animate() {
         velocity: grid.velocity
       })
 
-
-      //dit is voor de aliens hit detectie
-      projectiles.forEach((projectile, j) => {
-        if (projectile.position.y - projectile.radius <= invader.position.y + invader.height &&
-          projectile.position.x + projectile.radius >= invader.position.x &&
-          projectile.position.x - projectile.radius <= invader.position.x + invader.width &&
-          projectile.position.y + projectile.radius >= invader.position.y) {
+      Projectiles.forEach((Projectile, j) => {
+        if (Projectile.position.y - Projectile.radius <=
+          invader.position.y + invader.height &&
+          Projectile.position.x + Projectile.radius >=
+          invader.position.x && Projectile.position.x -
+          Projectile.radius <= invader.position.x + invader.width &&
+          Projectile.position.y + Projectile.radius >= invader.position.y
+        ) {
 
           setTimeout(() => {
-            const invaderFound = grid.invaders.find((invader2) => {
-              return invader2 === invader
-            })
+            const invaderFound = grid.invaders.find((invader2) => invader2 === invader)
+            const ProjectileFound = Projectiles.find(
+              (Projectile2) => Projectile2 === Projectile)
 
-            const projectileFound = projectiles.find(projectile2 => projectile2 === projectile)
-
-
-            //remove invader / projectile
-            if (invaderFound && projectileFound) {
+            //weg halen invader en projectitle
+            if (invaderFound && ProjectileFound) {
               grid.invaders.splice(i, 1)
-              projectiles.splice(j, 1)
-
-              if (grid.invaders.lenght > 0) {
+              Projectiles.splice(j, 1)
+              //invader die aan de zijkanten staan makkerlijker neer schieten
+              if (grid.invaders.length > 0) {
                 const firstInvader = grid.invaders[0]
-                const lastInvader = grid.invaders[grid.invaders.lenght - 1]
+                const lastInvader = grid.invaders[grid.invaders.length - 1]
 
-                grid.width = lastInvader.position.x - firstInvader.position.x + lastInvader.width
-                grid.position.x = firstInvader.position.x
+                grid.width = lastInvader.position.x -
+                  firstInvader.position.x + lastInvader.width
+                grid.position.x = firstInvader.position
+              } else {
+                grids.splice(gridIndex, 1)
               }
             }
           }, 0)
-
         }
-
       })
     })
   })
 
-  //besturing van speler
-  // als je op A druk dan ga je naar links met border limit
-  // player.rotation is de rotatie van de speler als je een richting in ga
+  // als je op A druk dan ga je naar links
   if (keys.a.pressed && player.position.x >= 0) {
     player.velocity.x = -7;
     player.rotation = -0.15
-    // als je op D druk dan ga je naar rechts met border limit
-    // player velocity is snelheid speler
+    // als je op D druk dan ga je naar rechts
   } else if (keys.d.pressed && player.position.x + player.width <= canvas.width) {
     player.velocity.x = 7
     player.rotation = 0.15
   } else {
-    // dit gebeurt er met de speler als je niks indrukt
-    player.velocity.x = 0
-    player.rotation = -0
+    player.velocity.x = 0;
+    player.rotation = 0
   }
 
-  // console.log(frames)
-  //spawned een nieuwe grid van enemies op een minimale fps van 2300 tot en met 3000 fps
+  //spwans de invaders in
   if (frames % randomInterval === 0) {
     grids.push(new Grid())
-    randomInterval = Math.floor(Math.random() * 700 + 1000)
+    randomInterval = Math.floor(Math.random() * 500 + 500)
     frames = 0
-    // console.log(randomInterval)
   }
-
 
 
 
   frames++
+
 }
-
-
 animate();
 
 addEventListener("keydown", ({
@@ -374,17 +381,16 @@ addEventListener("keydown", ({
       keys.d.pressed = true;
       break;
     case " ":
-      projectiles.push(new Projectile({
+      Projectiles.push(new Projectile({
         position: {
           x: player.position.x + player.width / 2,
           y: player.position.y
         },
         velocity: {
           x: 0,
-          y: -20
+          y: -10
         }
       }))
-      console.log(projectiles)
       break;
   }
 });
