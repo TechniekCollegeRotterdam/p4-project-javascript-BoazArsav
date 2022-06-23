@@ -1,3 +1,4 @@
+//Video Tijd 1:34:15
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
@@ -59,6 +60,7 @@ class Player {
     }
   }
 }
+
 //instellingen speler Projectiles
 class Projectile {
   constructor({
@@ -86,6 +88,43 @@ class Projectile {
 
   }
 }
+
+//instellingen Particle Explosion
+class Particle {
+  constructor({
+    position,
+    velocity,
+    radius,
+    color
+  }) {
+    this.position = position
+    this.velocity = velocity
+
+    this.radius = radius
+    this.color = color
+    this.opacity = 1
+  }
+
+  draw() {
+    c.save()
+    c.globalAlpha = this.opacity
+    c.beginPath()
+    c.arc(this.position.x, this.position.y, this.radius, 0,Math.PI * 2)
+    c.fillStyle = this.color
+    c.fill()
+    c.closePath()
+    c.restore()
+  }
+
+  update() {
+    this.draw()
+    this.position.x += this.velocity.x
+    this.position.y += this.velocity.y
+
+    this.opacity -= 0.01
+  }
+}
+
 
 //Instellingen Invader Projectiles
 class InvaderProjectile {
@@ -226,11 +265,12 @@ class Grid {
     }
   }
 }
-// constante functie's
+// Arrays
 const player = new Player();
 const Projectiles = []
 const grids = []
 const invaderProjectiles = []
+const particles = []
 
 const keys = {
   a: {
@@ -256,6 +296,18 @@ function animate() {
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
   player.update();
+  particles.forEach(particle => {
+    if (particle.opacity <= 0) {
+      setTimeout(() => {
+        particles.splice(1)
+      }, 0)
+    } else {
+      particle.update()
+    }
+  })
+
+
+
   invaderProjectiles.forEach((invaderProjectile, index) => {
     if (invaderProjectile.position.y + invaderProjectile.height >= canvas.height) {
       setTimeout(() => {
@@ -301,6 +353,7 @@ function animate() {
         velocity: grid.velocity
       })
 
+      //projectile hit enemy
       Projectiles.forEach((Projectile, j) => {
         if (Projectile.position.y - Projectile.radius <=
           invader.position.y + invader.height &&
@@ -310,6 +363,9 @@ function animate() {
           Projectile.position.y + Projectile.radius >= invader.position.y
         ) {
 
+
+
+
           setTimeout(() => {
             const invaderFound = grid.invaders.find((invader2) => invader2 === invader)
             const ProjectileFound = Projectiles.find(
@@ -317,6 +373,22 @@ function animate() {
 
             //weg halen invader en projectitle
             if (invaderFound && ProjectileFound) {
+              for(let i = 0; i < 15; i++){
+                particles.push(new Particle({
+                  position: {
+                    x:  invader.position.x + invader.width / 2,
+                    y:  invader.position.y + invader.height / 2
+                  },
+                  velocity: {
+                    x:  (Math.random() - 0.5) * 5, 
+                    y:  (Math.random() - 0.5) * 5
+                  },
+                  radius: Math.random() * 3,
+                  color: 'violet'
+      
+                })
+                )
+                }
               grid.invaders.splice(i, 1)
               Projectiles.splice(j, 1)
               //invader die aan de zijkanten staan makkerlijker neer schieten
