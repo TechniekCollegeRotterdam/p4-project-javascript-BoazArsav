@@ -10,7 +10,9 @@ Schieten: Spacebar<br>
 
 <h2>Gameplay Componenten</h2>
 De game is gemaakt in Canvas<br>
+De game is te spelen met het toetsenboard<bn>
 De game houdt de punten bij<br>
+Het spel heeft Geluid (Muziek op de achtergrond als je spacebar indrukt voor de 1ste keer)<br>
 
-<h2>Hoe kan je het spel downloaden</h2>
-Je kan dit spel zelf downloaden door op de Fork knop te drukken in de github branch
+<h2>Hoe kan je het spel Forken</h2>
+Je kan dit spel zelf forken door op de Fork knop te drukken in de github branch.
