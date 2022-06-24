@@ -290,23 +290,41 @@ let frames = 0
 let randomInterval = Math.floor(Math.random() * 500 + 700)
 
 
+function createParticles({object, color}) {
+  particles.push(new Particle({
+    position: {
+      x:  object.position.x + object.width / 2,
+      y:  object.position.y + object.height / 2
+    },
+    velocity: {
+      x:  (Math.random() - 0.5) * 5, 
+      y:  (Math.random() - 0.5) * 5
+    },
+    radius: Math.random() * 3,
+    color: color || 'lightblue'
+
+  })
+  )
+  }
+
+
 // de functie om animatie's te laten zien
 function animate() {
   requestAnimationFrame(animate);
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
   player.update();
-  particles.forEach(particle => {
+  particles.forEach((particle, i) => {
     if (particle.opacity <= 0) {
       setTimeout(() => {
-        particles.splice(1)
+        particles.splice(i, 1)
       }, 0)
     } else {
       particle.update()
     }
   })
 
-
+  console.log(particles)
 
   invaderProjectiles.forEach((invaderProjectile, index) => {
     if (invaderProjectile.position.y + invaderProjectile.height >= canvas.height) {
@@ -321,7 +339,8 @@ function animate() {
        player.position.y && invaderProjectile.position.x +
        invaderProjectile.width >= player.position.x && 
        invaderProjectile.position.x <= player.position.x +
-       player.width) {
+       player.width
+       ) {
 
         console.log('you lose')
       }
@@ -371,24 +390,13 @@ function animate() {
             const ProjectileFound = Projectiles.find(
               (Projectile2) => Projectile2 === Projectile)
 
-            //weg halen invader en projectitle
+            //weg halen invader en projectile
             if (invaderFound && ProjectileFound) {
               for(let i = 0; i < 15; i++){
-                particles.push(new Particle({
-                  position: {
-                    x:  invader.position.x + invader.width / 2,
-                    y:  invader.position.y + invader.height / 2
-                  },
-                  velocity: {
-                    x:  (Math.random() - 0.5) * 5, 
-                    y:  (Math.random() - 0.5) * 5
-                  },
-                  radius: Math.random() * 3,
-                  color: 'violet'
-      
+                createParticles({
+                  object: invader
                 })
-                )
-                }
+
               grid.invaders.splice(i, 1)
               Projectiles.splice(j, 1)
               //invader die aan de zijkanten staan makkerlijker neer schieten
