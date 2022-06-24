@@ -8,7 +8,7 @@ canvas.height = 576
 
 
 
-//begin class speler
+//Instellingen speler
 class Player {
   constructor() {
     this.velocity = {
@@ -19,7 +19,7 @@ class Player {
     this.rotation = 0
     this.opacity =10
 
-
+    //laad de image van de speler in en instellingen speler Image
     const image = new Image();
     image.src = "./img/plane.png";
     image.onload = () => {
@@ -84,7 +84,7 @@ class Projectile {
     c.arc(this.position.x, this.position.y, this.radius, 0,
       Math.PI * 2)
 
-    c.fillStyle = 'red'
+    c.fillStyle = 'lightblue'
     c.fill()
     c.closePath()
   }
@@ -148,7 +148,7 @@ class InvaderProjectile {
   }
 
   draw() {
-    c.fillStyle = '#72f542'
+    c.fillStyle = 'violet'
     c.fillRect(this.position.x, this.position.y, this.width,
       this.height)
   }
@@ -334,7 +334,7 @@ function createParticles({object, color, fades}) {
         y: (Math.random() -0.5) * 10
       },
       radius: Math.random() * 3,
-      color: color || 'orange',
+      color: color || 'violet',
       fades
     }))}
 }
@@ -389,7 +389,7 @@ function animate() {
         },2000)
         createParticles({
           object: player,
-          color:  'white',
+          color:  'lightblue',
           fades: true
          })
       }
@@ -442,6 +442,7 @@ function animate() {
 
             //weg halen invader en projectitle
             if (invaderFound && ProjectileFound) {
+              //schieten Invader 100 punten
               score += 100
               scoreEL.innerHTML = score
 
@@ -488,7 +489,8 @@ function animate() {
   //spwans de invaders in
   if (frames % randomInterval === 0) {
     grids.push(new Grid())
-    randomInterval = Math.floor(Math.random() * 500 + 500)
+    // spawn een grid invaders tussen de 700 en de 1200 frames
+    randomInterval = Math.floor(Math.random() * 500 + 700)
     frames = 0
   }
 
