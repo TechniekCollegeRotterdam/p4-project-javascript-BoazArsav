@@ -16,5 +16,5 @@ De game heeft Muziek op de achtergrond<br>
 De game houdt de punten bij<br>
 Het spel eindigt als je af ben<br>
 
-<h2>Hoe kan je het spel downloaden</h2>
-Je kan dit spel zelf downloaden door op de Fork knop te drukken in de github branch
+<h2>Hoe kan je het spel Forken</h2>
+Je kan dit spel zelf forken door op de Fork knop te drukken in de github branch.
