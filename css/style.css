@@ -1,0 +1,13 @@
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 0, 0);
+    font-family: sans-serif;
+    font-size: 14px;
+}
+
+canvas {
+    border: 10px solid rgb(97, 0, 102);
+}

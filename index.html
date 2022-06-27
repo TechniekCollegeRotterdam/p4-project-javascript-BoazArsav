@@ -1,8 +1,20 @@
-<link rel="stylesheet" href="style.css">
-<title>Space Invaders</title>
+<html>
+<head>
+    <!--dit laad de css van de game in-->
+    <link rel="stylesheet" href="css/style.css">
+    <!--de titel van het spel-->
+    <title>Space invader</title>
+</head>
+</html>
 
+<!--Dit is het scoreboard van het spel-->
+<div style="position: relative;" id="parentDiv">
+    <p style="position: absolute; z-index: 10; color: white; left: 10px; top: 10px; margin: 0;">
+        <span>Score:</span> <span id="scoreEl">0</span>
+    </p>
+<!--dit is de canvas (scherm) van het spel-->
+    <canvas></canvas>
+</div>
 
-<canvas></canvas>
-
-
-<script src="app.js"></script>
+<!--dit laad de script van het spel in-->
+<script src="js/app.js"></script>
