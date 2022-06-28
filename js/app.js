@@ -291,6 +291,7 @@ const startGame = function(){
     }
   }
   
+  //constante variables
   const player = new Player();
   const Projectiles = []
   const grids = []
