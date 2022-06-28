@@ -162,7 +162,7 @@ const startGame = function(){
     }
   
     draw() {
-      c.fillStyle = 'violet'
+      c.fillStyle = 'yellow'
       c.fillRect(this.position.x, this.position.y, this.width,
         this.height)
     }
